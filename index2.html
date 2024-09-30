@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinturas Romeros - Realidad Aumentada</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Agregar AR.js y Three.js -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/jeromeetienne/ar.js/master/aframe/build/aframe-ar.js"></script>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .logo h1 {
+            margin: 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #ffb400;
+        }
+        #hero {
+            background: url('images/hero-bg.jpg') no-repeat center center/cover;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+        }
+        #hero h2 {
+            font-size: 3em;
+            margin: 0;
+        }
+        #hero button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ffb400;
+            border: none;
+            font-size: 1em;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #hero button:hover {
+            background-color: #222;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Pinturas Romeros</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#galeria">Galería</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="hero">
+            <h2>Transforma tus espacios con color</h2>
+            <button onclick="activateAR()">Ver en realidad aumentada</button>
+        </section>
+
+        <!-- Sección de realidad aumentada -->
+        <section id="ar-view" style="display:none;">
+            <a-scene embedded arjs>
+                <!-- Sección de la cámara -->
+                <a-marker preset="hiro">
+                    <!-- Un cubo representando la pared virtual -->
+                    <a-box id="pared-virtual" position="0 0.5 0" rotation="0 45 0" color="#ff0000" depth="0.1" height="1" width="1"></a-box>
+                </a-marker>
+                <a-entity camera></a-entity>
+            </a-scene>
+
+            <div style="text-align:center;">
+                <label for="colorPicker">Elige un color:</label>
+                <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Pinturas Romeros. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Función para activar la realidad aumentada
+        function activateAR() {
+            // Mostrar la sección AR
+            document.getElementById('ar-view').style.display = 'block';
+
+            // Cambiar color de la pared virtual en tiempo real
+            document.getElementById('colorPicker').addEventListener('input', function() {
+                let newColor = this.value;
+                document.getElementById('pared-virtual').setAttribute('color', newColor);
+            });
+        }
+    </script>
+</body>
+</html>
